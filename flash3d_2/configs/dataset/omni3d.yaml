@@ -1,0 +1,40 @@
+name: omni3d
+split: original
+data_path: /home/shk00315/cap_2/flash3d_2/data/omni3d # 다른 객체 가능 
+pose_path : /home/shk00315/cap_2/flash3d_2/data/omni3d
+depth_path : /home/shk00315/cap_2/flash3d_2/data/omni3d
+split_path: /home/shk00315/cap_2/flash3d_2/data/omni3d
+png: false
+
+sparse_view_num : -1
+resolution : 1
+use_mask : true
+use_depth : true 
+data_device : cuda
+init_pcd_name : origin
+white_background : true
+
+data_dir : /home/shk00315/cap_2/flash3d_2/result_images
+cube_size : 4.0
+voxel_num : 200
+sparse_id : 2
+reso : 1
+not_vis : true
+cube_size_shift_x : 0.0
+cube_size_shift_y : 0.0
+cube_size_shift_z : 0.0
+
+
+height: 256
+width: 256
+
+znear: 0.01
+zfar: 100.0
+max_fov: 100.0
+
+color_aug: false
+pad_border_aug: 0
+stereo: false
+flip_left_right: false
+
+scale_pose_by_depth: false

@@ -1,0 +1,97 @@
+config:
+  exp_name: debug
+  file: config.yaml
+data_loader:
+  batch_size: 2
+  num_workers: 4
+defaults:
+- _self_
+- hydra: defaults
+- model: gaussian
+- dataset: omni3d
+- loss:
+  - reconstruction
+optimiser:
+  learning_rate: 1e-4
+  num_epochs: 25
+  scheduler_lambda_step_size: 60000
+param:
+  checkpoint_iterations: []
+  compute_cov3D_python: false
+  convert_SHs_python: false
+  data_device: cuda
+  debug: false
+  debug_from: -1
+  densification_interval: 100
+  densify_from_iter: 500
+  densify_grad_threshold: 0.0002
+  densify_until_iter: 4200
+  detect_anomaly: false
+  dust3r_json: null
+  end_sample_pseudo: 1000000
+  eval: false
+  feature_lr: 0.0025
+  images: images
+  init_pcd_name: origin
+  ip: 127.0.0.1
+  iterations: 7000
+  lambda_dssim: 0.2
+  lambda_silhouette: 0.01
+  lambda_t_norm: 0.0005
+  max_num_splats: 3000000
+  model_path: ''
+  mono_depth_weight: 0.0005
+  mono_loss_type: mid
+  name:
+  - Pipeline Parameters
+  opacity_lr: 0.05
+  opacity_reset_interval: 1000
+  percent_dense: 0.01
+  port: 6009
+  pose_iterations: 4000
+  position_lr_delay_mult: 0.01
+  position_lr_final: 1.6e-06
+  position_lr_init: 0.00016
+  position_lr_max_steps: 30000
+  quiet: false
+  random_background: false
+  remove_outliers_interval: 500
+  resolution: 4
+  rotation_lr: 0.001
+  sample_pseudo_interval: 10
+  save_iterations:
+  - 3000
+  scaling_lr: 0.005
+  sh_degree: 3
+  source_path: ''
+  sparse_view_num: -1
+  start_checkpoint: null
+  start_sample_pseudo: 400000
+  test_iterations:
+  - 3000
+  transform_the_world: false
+  use_dust3r: false
+  use_mask: true
+  white_background: true
+run:
+  debug: false
+  dirpath: null
+  git_hash: null
+  log_frequency: 250
+  num_keep_ckpts: 5
+  random_seed: 42
+  resume_ckpt: null
+  save_frequency: 2500
+  val_frequency: 2500
+train:
+  ema:
+    beta: 0.9999
+    update_after_step: 100
+    update_every: 10
+    use: true
+  load_weights_folder: null
+  logging: true
+  mixed_precision: null
+  num_gpus: 1
+  output_dir: /home/shk00315/cap_2/flash3d_2/checkpoints
+  save_step: 10000

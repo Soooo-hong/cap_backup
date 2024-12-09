@@ -1,0 +1,12 @@
+*.pyc
+.vscode
+output
+build
+*.egg-info
+dist
+__pycache__
+data/*
+.cache
+
+v1-5-pruned.ckpt
+*.pth
