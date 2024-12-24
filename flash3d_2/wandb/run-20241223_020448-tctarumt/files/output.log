@@ -1,0 +1,151 @@
+[2024-12-23 02:04:49,090][root][INFO] - Working dir: /home/soohong/cap_backup/flash3d_2/exp/2024-12-23/02-04-49
+Seed set to 42
+Initializing distributed: GLOBAL_RANK: 0, MEMBER: 1/1
+----------------------------------------------------------------------------------------------------
+distributed_backend=nccl
+All distributed processes registered. Starting with 1 processes
+----------------------------------------------------------------------------------------------------
+Loaded datasets
+
+Downloading: "https://github.com/lpiccinelli-eth/UniDepth/zipball/main" to /home/soohong/.cache/torch/hub/main.zip
+/home/soohong/anaconda3/envs/cap/lib/python3.10/site-packages/timm/models/layers/__init__.py:48: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+[2024-12-23 02:04:53,365][dinov2][INFO] - using MLP layer as FFN
+UniDepth_v1_vitl14 is loaded with:
+	 missing keys: ['pixel_encoder.register_tokens', 'pixel_encoder.norm.weight', 'pixel_encoder.norm.bias']
+	 additional keys: []
+[2024-12-23 02:05:00,213][root][INFO] - Loading weights from /home/soohong/cap_backup/flash3d_2/checkpoints/model_re10k_v2.pth...
+/home/soohong/anaconda3/envs/cap/lib/python3.10/site-packages/lightning/fabric/fabric.py:952: The model passed to `Fabric.setup()` has 31 parameters on different devices (for example 'lpips.net.net.slice1.0.weight' on cpu and 'model.models.unidepth_extended.unidepth.pixel_encoder.cls_token' on cuda:0). Since `move_to_device=True`, all parameters will be moved to the new device. If this is not desired, set `Fabric.setup(..., move_to_device=False)`.
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/timer_010_1080/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/flower_pot_007/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/guitar_002/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/gloves_009_1080/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/toy_plane_005/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/toy_truck_037/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/vase_012/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/hamburger_012/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/box_043/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/suitcase_006/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/broccoli_003/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/picnic_basket_009/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/dinosaur_006/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/pineapple_013/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/backpack_016/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/sandwich_003/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/coconut_026/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/conch_001/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/china_019/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/corn_007/images...
+Reading camera 200/200
+[2024-12-23 02:08:25,397][root][INFO] - There are 3600 train items
+
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/timer_010_1080/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/flower_pot_007/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/guitar_002/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/gloves_009_1080/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/toy_plane_005/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/toy_truck_037/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/vase_012/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/hamburger_012/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/box_043/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/suitcase_006/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/broccoli_003/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/picnic_basket_009/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/dinosaur_006/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/pineapple_013/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/backpack_016/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/sandwich_003/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/coconut_026/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/conch_001/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/china_019/images...
+Reading camera 200/200
+Using resized images in /home/soohong/cap_backup/flash3d_2/data/omni3d/corn_007/images...
+Reading camera 200/200
+[2024-12-23 02:12:03,144][root][INFO] - There are 400 val items
+Training Epochs:   0%|                                                                                                                                                            | 0/25 [00:00<?, ?epoch/s]/home/soohong/anaconda3/envs/cap/lib/python3.10/site-packages/torch/optim/lr_scheduler.py:271: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
+
+[2024-12-23 02:12:04,088][root][INFO] - Training on epoch 0
+  warnings.warn("To get the last learning rate computed by the scheduler, "
+Val: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 200/200 [02:45<00:00,  1.21it/s]
+Val: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 200/200 [02:45<00:00,  1.21it/s]
+psnr: 14.222810664176942
+ssim: 0.8539221152663231
+lpips: 0.24225593098128836
+Val: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 200/200 [02:45<00:00,  1.21it/s]
+psnr: 19.48845255533854
+ssim: 0.9163799658417702
+lpips: 0.11646317282070717
+Val: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 200/200 [02:45<00:00,  1.21it/s]
+psnr: 21.42293223698934
+ssim: 0.9212424146135648
+lpips: 0.09257697792413334
+Val: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 200/200 [02:44<00:00,  1.22it/s]
+psnr: 22.213374121983847
+ssim: 0.9244338603814444
+lpips: 0.08531666269836326
+[2024-12-23 02:34:30,554][root][INFO] - Training on epoch 1
+Val: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 200/200 [02:45<00:00,  1.21it/s]
+psnr: 22.888197889328
+ssim: 0.9269020892182986
+lpips: 0.07987713956274092
+[2024-12-23 02:41:35,961][root][INFO] - saving checkpoint to /home/soohong/cap_backup/flash3d_2/checkpoints/model_0002500.pth
+Val: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 200/200 [02:45<00:00,  1.21it/s]
+psnr: 23.346346537272137
+ssim: 0.9289438722531002
+lpips: 0.07598352036594103
+Val: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 200/200 [02:46<00:00,  1.20it/s]
+psnr: 23.624348835945128
+ssim: 0.9301583382487296
+lpips: 0.07360580110922456
+Val: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 200/200 [02:45<00:00,  1.21it/s]
+psnr: 23.841014029184976
+ssim: 0.9308263678352038
+lpips: 0.07163307913579046
+[2024-12-23 02:56:40,724][root][INFO] - Training on epoch 2
+Val: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 200/200 [02:44<00:00,  1.22it/s]
+psnr: 23.969150093396507
+ssim: 0.9313271076480548
+lpips: 0.07041950633594145
+Val: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 200/200 [02:44<00:00,  2.59it/s]
+psnr: 24.098091645240782
+ssim: 0.9319660969575246
+lpips: 0.06906794455057631
+[2024-12-23 03:10:48,039][root][INFO] - saving checkpoint to /home/soohong/cap_backup/flash3d_2/checkpoints/model_0005000.pth
+Val:  86%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▍                     | 173/200 [02:26<00:28,  1.05s/it]

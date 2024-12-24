@@ -1,0 +1,22 @@
+2024-12-23 02:04:48,253 INFO    MainThread:244962 [wandb_setup.py:_flush():68] Current SDK version is 0.19.1
+2024-12-23 02:04:48,253 INFO    MainThread:244962 [wandb_setup.py:_flush():68] Configure stats pid to 244962
+2024-12-23 02:04:48,253 INFO    MainThread:244962 [wandb_setup.py:_flush():68] Loading settings from /home/soohong/.config/wandb/settings
+2024-12-23 02:04:48,253 INFO    MainThread:244962 [wandb_setup.py:_flush():68] Loading settings from /home/soohong/cap_backup/flash3d_2/wandb/settings
+2024-12-23 02:04:48,253 INFO    MainThread:244962 [wandb_setup.py:_flush():68] Loading settings from environment variables
+2024-12-23 02:04:48,253 INFO    MainThread:244962 [wandb_init.py:_log_setup():528] Logging user logs to /home/soohong/cap_backup/flash3d_2/wandb/run-20241223_020448-tctarumt/logs/debug.log
+2024-12-23 02:04:48,253 INFO    MainThread:244962 [wandb_init.py:_log_setup():529] Logging internal logs to /home/soohong/cap_backup/flash3d_2/wandb/run-20241223_020448-tctarumt/logs/debug-internal.log
+2024-12-23 02:04:48,254 INFO    MainThread:244962 [wandb_init.py:init():644] calling init triggers
+2024-12-23 02:04:48,254 INFO    MainThread:244962 [wandb_init.py:init():650] wandb.init called with sweep_config: {}
+config: {}
+2024-12-23 02:04:48,254 INFO    MainThread:244962 [wandb_init.py:init():680] starting backend
+2024-12-23 02:04:48,254 INFO    MainThread:244962 [wandb_init.py:init():684] sending inform_init request
+2024-12-23 02:04:48,260 INFO    MainThread:244962 [backend.py:_multiprocessing_setup():104] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2024-12-23 02:04:48,260 INFO    MainThread:244962 [wandb_init.py:init():697] backend started and connected
+2024-12-23 02:04:48,263 INFO    MainThread:244962 [wandb_init.py:init():790] updated telemetry
+2024-12-23 02:04:48,272 INFO    MainThread:244962 [wandb_init.py:init():822] communicating run to backend with 90.0 second timeout
+2024-12-23 02:04:48,692 INFO    MainThread:244962 [wandb_init.py:init():874] starting run threads in backend
+2024-12-23 02:04:48,831 INFO    MainThread:244962 [wandb_run.py:_console_start():2374] atexit reg
+2024-12-23 02:04:48,831 INFO    MainThread:244962 [wandb_run.py:_redirect():2224] redirect: wrap_raw
+2024-12-23 02:04:48,831 INFO    MainThread:244962 [wandb_run.py:_redirect():2289] Wrapping output streams.
+2024-12-23 02:04:48,831 INFO    MainThread:244962 [wandb_run.py:_redirect():2314] Redirects installed.
+2024-12-23 02:04:48,833 INFO    MainThread:244962 [wandb_init.py:init():916] run started, returning control to user process

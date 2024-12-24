@@ -93,5 +93,5 @@ train:
   logging: true
   mixed_precision: null
   num_gpus: 1
-  output_dir: /home/shk00315/cap_2/flash3d_2/checkpoints
+  output_dir: /home/soohong/cap_backup/flash3d_2/checkpoints
   save_step: 10000

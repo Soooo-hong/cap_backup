@@ -1,0 +1,5 @@
+[default]
+entity = soohong-university-of-seoul
+project = capstone2
+base_url = https://api.wandb.ai
+

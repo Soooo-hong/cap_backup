@@ -26,6 +26,8 @@ from GaussianObject.arguments import ModelParams, OptimizationParams, PipelinePa
 from GaussianObject.gaussian_renderer import network_gui
 from GaussianObject.utils.general_utils import safe_state
 
+import wandb 
+wandb.init(project="capstone2")
 
 def run_epoch(fabric,
               trainer,
@@ -48,6 +50,8 @@ def run_epoch(fabric,
         #print()
         inputs["target_frame_ids"] = cfg.model.gauss_novel_frames
         losses, outputs = trainer(inputs)
+        wandb.log({"loss" : losses})
+
         optimiser.zero_grad(set_to_none=True)
         fabric.backward(losses["loss/total"])
         optimiser.step()

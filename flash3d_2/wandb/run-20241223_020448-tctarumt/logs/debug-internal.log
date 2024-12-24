@@ -1,0 +1,8 @@
+{"time":"2024-12-23T02:04:48.265992816Z","level":"INFO","msg":"using version","core version":"0.19.1"}
+{"time":"2024-12-23T02:04:48.266020383Z","level":"INFO","msg":"created symlink","path":"/home/soohong/cap_backup/flash3d_2/wandb/run-20241223_020448-tctarumt/logs/debug-core.log"}
+{"time":"2024-12-23T02:04:48.37498018Z","level":"INFO","msg":"created new stream","id":"tctarumt"}
+{"time":"2024-12-23T02:04:48.375039516Z","level":"INFO","msg":"stream: started","id":"tctarumt"}
+{"time":"2024-12-23T02:04:48.375155954Z","level":"INFO","msg":"writer: Do: started","stream_id":"tctarumt"}
+{"time":"2024-12-23T02:04:48.375195453Z","level":"INFO","msg":"handler: started","stream_id":"tctarumt"}
+{"time":"2024-12-23T02:04:48.375289706Z","level":"INFO","msg":"sender: started","stream_id":"tctarumt"}
+{"time":"2024-12-23T02:04:48.701364508Z","level":"INFO","msg":"Starting system monitor"}

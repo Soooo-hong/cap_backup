@@ -1,23 +1,18 @@
 from pathlib import Path
-import gzip
 import numpy as np 
 import random 
 import torch 
-import pickle
 import os 
 import torch.utils.data as data
 import torchvision.transforms as T
 
 from PIL import Image
-from datasets.tardataset import TarDataset
 
-from datasets.data import pil_loader, get_sparse_depth, process_projs
-from misc.depth import estimate_depth_scale_ransac
-from misc.localstorage import copy_to_local_storage, extract_tar, get_local_dir
+from datasets.data import pil_loader
 from GaussianObject.scene.colmap_loader import (read_intrinsics_binary,read_extrinsics_binary,
                                                 read_extrinsics_text,read_intrinsics_text)
 from GaussianObject.scene.dataset_readers import readColmapCameras
-from GaussianObject.utils.graphics_utils import fov2focal,getWorld2View
+from GaussianObject.utils.graphics_utils import fov2focal,getWorld2View,getWorld2View2
 
 
 def readlines(filename):
@@ -57,7 +52,7 @@ class OmniDataset(data.Dataset) :
         self.frame_count = len(self.novel_frames) + 1
         self.max_fov = cfg.dataset.max_fov
         self.interp = Image.LANCZOS
-        self.loader = pil_loader
+        self.loader = pil_loader  #RGB 이미지 load함수 
         self.to_tensor = T.ToTensor()
         self.resolution = cfg.dataset.resolution
         self.flip_left_right = cfg.dataset.flip_left_right
@@ -150,7 +145,6 @@ class OmniDataset(data.Dataset) :
         same augmentation.
         """
         for k in list(inputs):
-            frame = inputs[k]
             if "color" in k:
                 n, im, i = k
                 for i in range(self.num_scales):
@@ -217,17 +211,28 @@ class OmniDataset(data.Dataset) :
                     #   width=width, height=height, mask=mask, mono_depth=mono_depth)
                     # cam_infops.mask  이런식으로 표현 가능 
 
-            poses_seq  = []        
+            poses_seq_  = []        
             try : 
                 for idx in range(len(cam_infos)):                 
                     # T_w_cam0 = np.hstack((cam_infos[idx].R,cam_infos[idx].T.reshape((3,1))))
                     # T_w_cam0 = np.vstack((T_w_cam0,[0,0,0,1]))
                     T_w_cam0 =getWorld2View(torch.tensor(cam_infos[idx].R),torch.tensor(cam_infos[idx].T))
-                    poses_seq.append(T_w_cam0)
+                    R = torch.tensor(cam_infos[idx].R).T
+                    t = -np.dot(R,torch.tensor(cam_infos[idx].T))
+                    pose_ = np.eye(4)
+                    pose_[:3,:3] = R
+                    pose_[:3,3] = t
+                    Rt = np.zeros((4,4))
+                    Rt[:3,:3] = torch.tensor(cam_infos[idx].R).T
+                    Rt[:3,3] = torch.tensor(cam_infos[idx].T)
+                    Rt[3,3] = 1.0
+                    C2W = np.linalg.inv(Rt)
+                    # W2C = torch.tensor(getWorld2View2(torch.tensor(cam_infos[idx].R),torch.tensor(cam_infos[idx].T))).transpose(0, 1)
+                    poses_seq_.append(C2W)
             except FileNotFoundError:
                 pass 
             
-            poses_seq = np.array(poses_seq, dtype=np.float32)
+            poses_seq = np.array(poses_seq_, dtype=np.float32)
             poses[(day, 'images')] = poses_seq
             cam_infos_dict[((day, 'images'))] = cam_infos # cam_infos에 이미 객체별로 나눠져 있음 
         return poses,cam_infos_dict    
@@ -264,6 +269,7 @@ class OmniDataset(data.Dataset) :
             i  = f_id
             if -1<frame_index+i<200 : 
                 inputs[("color", f_id, -1)] = self.get_color(folder, frame_index + i, do_flip)
+                frame_index = frame_index + i 
             else : 
                 frame_index = (frame_index+i)%200
                 # if (frame_index+i == -1 or frame_index+i==200 or frame_index+i ==201) : 
@@ -271,7 +277,7 @@ class OmniDataset(data.Dataset) :
                 # inputs[('sparse',0)] = f"{folder}/{frame_index:05d}"
         
             for scale in range(self.num_scales): #scale = [0]
-                cam_param = self.cam_infos[(day,sequence)][frame_index]
+                cam_param = self.cam_infos[(day,sequence)][src_frame_index]
                 fx = fov2focal(cam_param.FovX,cam_param.width)
                 fy = fov2focal(cam_param.FovY,cam_param.height)
                 cx = cam_param.width/2
@@ -279,40 +285,34 @@ class OmniDataset(data.Dataset) :
                 K = np.array([[fx, 0, cx],
                             [0, fy, cy],
                             [0, 0, 1]], dtype=np.float32)
-                # K = self.K
-                # 마지막 16프레임만 예측하도록 만듦 
-                
+                 
                 K_tgt = K.copy()
-                cam_param_src = self.cam_infos[(day,sequence)][src_frame_index]
-                fx = fov2focal(cam_param_src.FovX,cam_param_src.width)
-                fy = fov2focal(cam_param_src.FovY,cam_param_src.height)
-                cx = cam_param_src.width/2
-                cy = cam_param_src.height/2
-                K_src = np.array([[fx, 0, cx],
-                            [0, fy, cy],
-                            [0, 0, 1]], dtype=np.float32)
-                # K_src = K.copy()
+                K_src = K.copy()
+                K_tgt[0, :] *= self.image_size[1]/cam_param.width
+                K_tgt[1, :] *= self.image_size[0]/cam_param.height
                 
-                assert not do_flip
-                
-                # K_tgt[0, :] *= self.image_size[1] // (2 ** scale)
-                # K_tgt[1, :] *= self.image_size[0] // (2 ** scale)
-
-                # K_src[0, :] *= self.image_size[1] // (2 ** scale)
-                # K_src[1, :] *= self.image_size[0] // (2 ** scale)
-                # principal points change if we add padding
-                # K_src[0, 2] += self.cfg.dataset.pad_border_aug // (2 ** scale)
-                # K_src[1, 2] += self.cfg.dataset.pad_border_aug // (2 ** scale)
+                # 패딩값과 resize에 대한 scaling
+                K_src[0, 0] *= (self.image_size[1]+2*self.cfg.dataset.pad_border_aug)/cam_param.width
+                K_src[1, 1] *= (self.image_size[0]+2*self.cfg.dataset.pad_border_aug)/cam_param.height
+                #패딩값과 resize된 이미지에 따른 scaling
+                K_src[0, 2] *= self.image_size[1]/cam_param.width
+                K_src[0, 2] += self.cfg.dataset.pad_border_aug
+                K_src[1, 2] *= self.image_size[0]/cam_param.height 
+                K_src[1, 2] += self.cfg.dataset.pad_border_aug
                 
                 inv_K_src = np.linalg.pinv(K_src)
-                inputs[("K_tgt", f_id)] = torch.from_numpy(K_tgt)[..., :3, :3]
                 inputs[("K_src", scale)] = torch.from_numpy(K_src)[..., :3, :3]
                 inputs[("inv_K_src", scale)] = torch.from_numpy(inv_K_src)[..., :3, :3]
-            inputs[("frame_id",0)] = f"{folder}/{frame_index:05d}"
+
+                assert not do_flip
+                inputs[("K_tgt", scale)] = torch.from_numpy(K_tgt)[..., :3, :3]
+                
+                # inputs[("K_tgt", f_id)] = torch.from_numpy(K_tgt)[..., :3, :3]
+            inputs[("frame_id",0)] = f"{folder}/{src_frame_index:05d}"
 
         if do_color_aug:
-            raise NotImplementedError
-            color_aug = random_color_jitter(
+            # raise NotImplementedError
+            color_aug = T.ColorJitter(
                 self.brightness, self.contrast, self.saturation, self.hue)
         else:
             color_aug = (lambda x: x)
@@ -329,7 +329,7 @@ class OmniDataset(data.Dataset) :
             # del inputs[("color_aug", i, -1)]
             
         if self.gt_depths:
-            depth_gt = self.get_depth_anything(folder, frame_index, do_flip)
+            depth_gt = self.get_depth_anything(folder, src_frame_index, do_flip)
             depth_gt = np.expand_dims(depth_gt, 0)
             depth_gt = torch.from_numpy(depth_gt.astype(np.float32))
             depth_gt = self.resize_depth(depth_gt)
@@ -338,12 +338,7 @@ class OmniDataset(data.Dataset) :
         if self.gt_poses:
             # Load "GT" poses
             for f_id in frame_idxs:
-                if type(f_id) == str : # stereo frame
-                    i = int(f_id[1:])
-                else:
-                    i = f_id
-                # if -1<frame_index+i <200 : 
-                    # id = frame_index + i
+                i = f_id
                 id = (src_frame_index+i)%200
                 # else : 
                 #     id = frame_index

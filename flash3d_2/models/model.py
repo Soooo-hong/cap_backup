@@ -243,7 +243,7 @@ class GaussianPredictor(nn.Module):
 
                 for b in range(B):
                     # get camera projection matrix
-                    if cfg.dataset.name in ["kitti", "nyuv2", "waymo"]:
+                    if cfg.dataset.name in ["kitti", "nyuv2", "waymo",'omni3d']:
                         K_tgt = inputs[("K_tgt", 0)]
                     else:
                         K_tgt = inputs[("K_tgt", frame_id)]
@@ -292,11 +292,11 @@ class GaussianPredictor(nn.Module):
                     outputs[("depth_gauss", frame_id, scale)] = depths
     
     def checkpoint_dir(self):
-        return Path("checkpoints")
+        return Path('/home/soohong/cap_backup/flash3d_2/checkpoints')
 
     def save_model(self, optimiser, step, ema=None):
         """save model weights to disk"""
-        new_dir = '/home/shk00315/cap_2/flash3d_2/checkpoints'
+        new_dir = '/home/soohong/cap_backup/flash3d_2/checkpoints'
         os.chdir(new_dir)
         save_folder = self.checkpoint_dir()
         save_folder.mkdir(exist_ok=True, parents=True)

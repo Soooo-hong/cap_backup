@@ -3,3 +3,4 @@ flash3d_2/exp/*
 flash3d_2/visual_results/images/*
 flash3d_2/checkpoints/*
 flash3d_2/result_images/*
+flash3d_2/misc/exp/*

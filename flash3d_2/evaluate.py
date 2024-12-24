@@ -32,7 +32,7 @@ def evaluate(model, cfg, evaluator, dataloader, device=None, save_vis=True):
     match cfg.dataset.name:
         case "re10k" | "nyuv2":
             # override the frame idxs used for eval
-            target_frame_ids = [1, 2, 3]
+            target_frame_ids = [1, 2, 8]
             eval_frames = ["src", "tgt5", "tgt10", "tgt_rand"]
             for fid, target_name in zip(add_source_frame_id(target_frame_ids),
                                         eval_frames):
@@ -46,7 +46,7 @@ def evaluate(model, cfg, evaluator, dataloader, device=None, save_vis=True):
                 target_frame_ids = ["s0"]
                 all_frames = add_source_frame_id(eval_frames)
             else:
-                eval_frames = [1,2, 8, 15]
+                eval_frames = [1, 2, 8]
                 target_frame_ids = eval_frames
                 all_frames = add_source_frame_id(target_frame_ids)
             for fid in all_frames:
@@ -58,13 +58,10 @@ def evaluate(model, cfg, evaluator, dataloader, device=None, save_vis=True):
     dataloader_iter = iter(dataloader)
     for k in tqdm([i for i in range(len(dataloader.dataset) // cfg.data_loader.batch_size)],desc = "Val"):
         if save_vis:
-            new_dir = '/home/shk00315/cap_2/flash3d_2'
+            new_dir = '/home/soohong/cap_backup/flash3d_2'
             os.chdir(new_dir)
             out_dir = Path("./visual_results/images")
             out_dir.mkdir(exist_ok=True)
-            # print(f"saving images to: {out_dir.resolve()}")
-            # seq_name = dataloader.dataset.object_names[k//len(dataloader.dataset.filenames[0][1])] # omni에서 오류 발생 
-            # out_out_dir = out_dir / seq_name
             out_out_dir = out_dir / "eval"
             out_out_dir.mkdir(exist_ok=True)
             out_pred_dir = out_out_dir / f"pred"
@@ -104,16 +101,20 @@ def evaluate(model, cfg, evaluator, dataloader, device=None, save_vis=True):
                 gt = inputs[('color', f_id, 0)]
             # should work in for B>1, however be careful of reduction
             out = evaluator(pred, gt)
-            if save_vis:
-                # save_ply(outputs, out_dir_ply / f"{f_id}.ply", gaussians_per_pixel=model.cfg.model.gaussians_per_pixel)
-                save_ply(outputs, out_dir_ply / f"{f_id}.ply", gaussians_per_pixel=cfg.model.gaussians_per_pixel)
+            if k % 10 == 0 : 
+                for i in range(cfg.data_loader.batch_size) : 
+                    if save_vis:
+                        names = inputs[('frame_id',0)][i]
+                        category, num_index = names.split('/')
+                        # save_ply(outputs, out_dir_ply / f"{f_id}.ply", gaussians_per_pixel=model.cfg.model.gaussians_per_pixel)
+                        save_ply(outputs, out_dir_ply / f"{category}_{num_index}_{f_id}.ply", gaussians_per_pixel=cfg.model.gaussians_per_pixel)
 
-                pred = pred[0].clip(0.0, 1.0).permute(1, 2, 0).detach().cpu().numpy()
-                gt = gt[0].clip(0.0, 1.0).permute(1, 2, 0).detach().cpu().numpy()
-                input_img = inputs[('color',0,0)][0].clip(0.0, 1.0).permute(1, 2, 0).detach().cpu().numpy()
-                plt.imsave(str(out_pred_dir / f"{f_id:03}.png"), pred)
-                plt.imsave(str(out_gt_dir / f"{f_id:03}.png"), gt)
-                plt.imsave(str(out_input_dir / f"{f_id:03}.png"), input_img)
+                        preds = pred[i].clip(0.0, 1.0).permute(1, 2, 0).detach().cpu().numpy()
+                        gts = gt[i].clip(0.0, 1.0).permute(1, 2, 0).detach().cpu().numpy()
+                        # input_img = inputs[('color',0,0)][i].clip(0.0, 1.0).permute(1, 2, 0).detach().cpu().numpy()
+                        plt.imsave(str(out_pred_dir / f"{category}_{num_index}_{f_id:03}.png"), preds)
+                        plt.imsave(str(out_gt_dir / f"{category}_{num_index}_{f_id:03}.png"), gts)
+                        # plt.imsave(str(out_input_dir / f"{category}_{num_index}_{f_id:03}.png"), input_img)
             for metric_name, v in out.items():
                 score_dict[f_id][metric_name].append(v)
         

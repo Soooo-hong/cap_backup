@@ -8,7 +8,7 @@ defaults:
   - override /loss: [regularization, reconstruction]
 
 optimiser:
-  scheduler_lambda_step_size: 500000
+  scheduler_lambda_step_size: 50000
 
 train:
   scale_pose_by_depth: true
@@ -16,7 +16,7 @@ train:
 
 model:
   name: unidepth
-  gauss_novel_frames: [-1, 1,2, 8,15]
+  gauss_novel_frames: [-1, 1, 2, 8]
   renderer_w_pose: true
   scale_with_depth: false
   opacity_scale: 1.0

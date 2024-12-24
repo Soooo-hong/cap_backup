@@ -1,9 +1,9 @@
 name: omni3d
 split: original
-data_path: /home/shk00315/cap_2/flash3d_2/data/omni3d # 다른 객체 가능 
-pose_path : /home/shk00315/cap_2/flash3d_2/data/omni3d
-depth_path : /home/shk00315/cap_2/flash3d_2/data/omni3d
-split_path: /home/shk00315/cap_2/flash3d_2/data/omni3d
+data_path: /home/soohong/cap_backup/flash3d_2/data/omni3d # 다른 객체 가능 
+pose_path : /home/soohong/cap_backup/flash3d_2/data/omni3d
+depth_path : /home/soohong/cap_backup/flash3d_2/data/omni3d
+split_path: /home/soohong/cap_backup/flash3d_2/data/omni3d
 png: false
 
 sparse_view_num : -1
@@ -14,7 +14,7 @@ data_device : cuda
 init_pcd_name : origin
 white_background : true
 
-data_dir : /home/shk00315/cap_2/flash3d_2/result_images
+data_dir : /home/soohong/cap_backup/flash3d_2/result_images
 cube_size : 4.0
 voxel_num : 200
 sparse_id : 2
@@ -33,7 +33,7 @@ zfar: 100.0
 max_fov: 100.0
 
 color_aug: false
-pad_border_aug: 0
+pad_border_aug: 32
 stereo: false
 flip_left_right: false
 

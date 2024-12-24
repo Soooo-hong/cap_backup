@@ -1,0 +1,1 @@
+{"_wandb":{"runtime":36858},"loss":{"loss/mse":0.007003777660429478,"loss/ssim":0.02057662419974804,"loss/rec":0.012858602218329906,"loss/total":0.012858602218329906,"loss/big_gauss_reg_loss":0,"loss/gauss_offset_reg":0},"_timestamp":1.734961295857224e+09,"_runtime":36857.453615462,"_step":44999}
