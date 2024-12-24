@@ -4,3 +4,6 @@ flash3d_2/visual_results/images/*
 flash3d_2/checkpoints/*
 flash3d_2/result_images/*
 flash3d_2/misc/exp/*
+flash3d_2/GaussianObject/wandb/*
+flash3d_2/datasets/omni3d_backup.py
+flash3d_2/wandb/*
