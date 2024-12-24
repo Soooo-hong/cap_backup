@@ -120,8 +120,8 @@ if __name__ == "__main__":
     zoe_model = init_model()
     zoe_depth_folder = os.path.join(cur_dir, 'zoe_depth')
     zoe_depth_colored_folder = os.path.join(cur_dir, 'zoe_depth_colored')
-    os.makedirs(zoe_depth_folder, exist_ok=False)
-    os.makedirs(zoe_depth_colored_folder, exist_ok=False)
+    os.makedirs(zoe_depth_folder, exist_ok=True)
+    os.makedirs(zoe_depth_colored_folder, exist_ok=True)
 
     for file in tqdm(sorted(os.listdir(os.path.join(cur_dir, 'images')))):
         image = Image.open(os.path.join(cur_dir, 'images', file)).convert("RGB")
